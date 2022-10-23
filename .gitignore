@@ -1,2 +1,4 @@
-/venv
+/.venv
 /__pycache__
+/base64.txt
+/static/result

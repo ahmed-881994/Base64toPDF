@@ -3,8 +3,10 @@
 // $('document').ready(function () {
 
 // });
-
-// Text input and GET request
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+// Text input and POST request
 function loading(enabled) {
     if (enabled) {
         $('#loader').removeClass('gone');
@@ -15,32 +17,46 @@ function loading(enabled) {
     }
 }
 
+function showError(enabled,text='') {
+    if (enabled) {
+        $('#error').removeClass('gone');
+        $('#error').html(text);
+    } else {
+        $('#error').addClass('gone');
+        $('#error').html(text);
+    }
+}
+
 $('#text-submit').click(function (e) {
-    loading(true)
+    
+    showError(false);
     var data = $('#text-input').val();
     if (data.length > 0) {
+        loading(true)
         sendPostRequest(data);
+    }
+    else{
+        showError(true, 'No Base64 entered');
     };
 });
 
-function sendPostRequest(request) {
+async function sendPostRequest(request) {
 
-    $('#error').html("");
     //console.log(request);
     request = JSON.stringify(request);
-
+    await sleep(1000)
     $.ajax({
         method: "POST",
         url: "./local/decode",
         data: { "request": request }
     }).done(function (response) {
 
-        if (response.hasOwnProperty('error')) {
-            $('#error').html(response['error']);
+        if (response.hasOwnProperty('error')){
+            showError(true,response['error']);
             console.log(response['error']);
         }
         else {
-            console.log('entered else')
+            
             var path = "../static/result/document.pdf#toolbar=1&navpanes=0&scrollbar=0";
             $("#file-display").attr("src", path);
             $("#file-display-container").removeClass('gone');
