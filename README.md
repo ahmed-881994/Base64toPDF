@@ -14,7 +14,7 @@ To install dependencies please make sure you have Python installed and use
 to install **Flask** and all **Flask-CORS**
 
 ---
-## Running the app using Uvicorn
+## Running the app
 
 navigate into the project directory and run
 
