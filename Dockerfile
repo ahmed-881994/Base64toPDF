@@ -15,7 +15,9 @@ COPY . /
 
 EXPOSE 8000
 
-CMD ["python", "app.py", "--port", "8000"]
+ENTRYPOINT [ "python" ]
 
-# docker build -t encryptorapi .
-# docker run -it --rm --name encryptorapi -p 8000:8000  encryptorapi
+CMD ["app.py", "--port", "8000"]
+
+# docker build -t base64topdf .
+# docker run -it --rm --name base64topdf -p 8000:8000  base64topdf
